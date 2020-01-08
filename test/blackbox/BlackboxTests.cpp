@@ -27,6 +27,7 @@
 #include "PubSubWriterReader.hpp"
 
 #include <fastrtps/rtps/RTPSDomain.h>
+#include <fastrtps/xmlparser/XMLProfileManager.h>
 #include <fastrtps/log/Log.h>
 
 #include <thread>
@@ -61,6 +62,11 @@ class BlackboxEnvironment : public ::testing::Environment
         void SetUp()
         {
             global_port = get_port();
+
+            LibrarySettingsAttributes att;
+            att.intraprocess_delivery = INTRAPROCESS_OFF;
+            eprosima::fastrtps::xmlparser::XMLProfileManager::library_settings(att);
+
             //Log::SetVerbosity(Log::Info);
             //Log::SetCategoryFilter(std::regex("(SECURITY)"));
         }
